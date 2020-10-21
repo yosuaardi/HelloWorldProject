@@ -35,6 +35,7 @@ public class LoginActivity extends AppCompatActivity {
     public void cekLogin(){
         if(txtUser.getText().toString().equals(user) && txtPass.getText().toString().equals(pass)){
             Intent intent = new Intent(this, HomeActivity.class);
+            intent.putExtra("COBA_INTENT_EXTRA", "Percobaan");
             startActivity(intent);
         }else {
             Toast.makeText(getApplicationContext(), "Username atau Password Anda tidak benar!", Toast.LENGTH_LONG).show();
