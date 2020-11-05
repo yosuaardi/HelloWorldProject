@@ -25,12 +25,11 @@
             android:text="Tab 2"
             android:layout_height="match_parent" />
     </com.google.android.material.tabs.TabLayout>
-
     <FrameLayout
         android:id="@+id/fragmentPlaceholder"
         android:layout_height="0dp"
         android:layout_width="match_parent"
-        android:layout_weight="1"/>
+        android:layout_weight="0.5"/>
 <!--    <FrameLayout-->
 <!--        android:id="@+id/fragmentTop"-->
 <!--        android:layout_height="0dp"-->
@@ -41,4 +40,31 @@
 <!--        android:layout_height="0dp"-->
 <!--        android:layout_width="match_parent"-->
 <!--        android:layout_weight="0.5"/>-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center_horizontal"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/btnStartJob"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginBottom="10dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:text="Start Job" />
+        <Button
+            android:id="@+id/btnStopJob"
+            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:layout_marginBottom="10dp"
+            android:text="Stop Job"/>
+    </LinearLayout>
 </LinearLayout>
