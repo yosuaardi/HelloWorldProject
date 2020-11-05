@@ -1,10 +1,15 @@
 package com.example.helloworld;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.app.job.JobInfo;
+import android.app.job.JobScheduler;
+import android.content.ComponentName;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Display;
@@ -21,6 +26,8 @@ public class HomeActivity extends AppCompatActivity {
     private TabItem tab1;
     private TabItem tab2;
     private TabLayout tabLayout;
+    private Button btnStart = null;
+    private Button btnStop = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +68,25 @@ public class HomeActivity extends AppCompatActivity {
 
             }
         });
+        btnStart = findViewById(R.id.btnStartJob);
+        btnStop = findViewById(R.id.btnStopJob);
+        btnStart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    scheduleJob();
+                }
+            }
+        });
+
+        btnStop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    cancelJob();
+                }
+            }
+        });
     }
 
     @Override
@@ -72,6 +98,35 @@ public class HomeActivity extends AppCompatActivity {
             Log.d("Success", "onResume: Landscape");
         }else{
             Log.d("Success", "onResume: Potrait");
+        }
+    }
+
+    public void scheduleJob(){
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            ComponentName comp = new ComponentName(this, MyJobService.class);
+
+            JobInfo jobInfo = new JobInfo.Builder(123, comp)
+                    .setRequiredNetworkType(JobInfo.NETWORK_TYPE_UNMETERED)
+                    .setPersisted(true)
+                    .setPeriodic(15 * 60 * 1000)
+                    .build();
+
+            JobScheduler jobScheduler = (JobScheduler) getSystemService(JOB_SCHEDULER_SERVICE);
+            int resultCode = jobScheduler.schedule(jobInfo);
+            if(resultCode == JobScheduler.RESULT_SUCCESS){
+                Log.d("Success", "Job Success");
+            }else{
+                Log.d("Failed", "Job Failed");
+            }
+        }
+    }
+
+    public void cancelJob(){
+        JobScheduler jobScheduler = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            jobScheduler = (JobScheduler) getSystemService(JOB_SCHEDULER_SERVICE);
+            jobScheduler.cancel(123);
+            Log.d("Success", "Job Cancelled");
         }
     }
 
