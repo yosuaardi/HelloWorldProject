@@ -7,7 +7,10 @@ import androidx.fragment.app.FragmentTransaction;
 import android.app.job.JobInfo;
 import android.app.job.JobScheduler;
 import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -28,6 +31,9 @@ public class HomeActivity extends AppCompatActivity {
     private TabLayout tabLayout;
     private Button btnStart = null;
     private Button btnStop = null;
+    private Button btnLogout = null;
+
+    public static final String KEY_EMAIL = "KEY_EMAIL";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,6 +76,7 @@ public class HomeActivity extends AppCompatActivity {
         });
         btnStart = findViewById(R.id.btnStartJob);
         btnStop = findViewById(R.id.btnStopJob);
+        btnLogout = findViewById(R.id.btnLogout);
         btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -85,6 +92,12 @@ public class HomeActivity extends AppCompatActivity {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     cancelJob();
                 }
+            }
+        });
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                logout();
             }
         });
     }
@@ -128,6 +141,15 @@ public class HomeActivity extends AppCompatActivity {
             jobScheduler.cancel(123);
             Log.d("Success", "Job Cancelled");
         }
+    }
+
+    public void logout(){
+        SharedPreferences.Editor editor = LoginActivity.sharedPreferences.edit();
+        editor.remove(KEY_EMAIL);
+        editor.commit();
+        Intent intent = new Intent(this, LoginActivity.class);
+        intent.putExtra("STATUS_LOGOUT", "Berhasil");
+        startActivity(intent);
     }
 
 //    private void onNotificationReceive(Context context, String status){
