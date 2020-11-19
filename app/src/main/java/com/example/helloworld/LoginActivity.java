@@ -1,5 +1,6 @@
 package com.example.helloworld;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -13,6 +14,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
@@ -79,21 +88,13 @@ public class LoginActivity extends AppCompatActivity {
         }else{
             Toast.makeText(getApplicationContext(), "Username atau Password Anda tidak benar!", Toast.LENGTH_LONG).show();
         }
-
-//        if(txtUser.getText().toString().equals(user) && txtPass.getText().toString().equals(pass)){
-//            SharedPreferences.Editor editor = sharedPreferences.edit();
-//            editor.putString(KEY_EMAIL, txtUser.getText().toString());
-//            editor.commit();
-//            Intent intent = new Intent(this, HomeActivity.class);
-//            intent.putExtra("COBA_INTENT_EXTRA", "Percobaan");
-//            startActivity(intent);
-//        }else {
-//            Toast.makeText(getApplicationContext(), "Username atau Password Anda tidak benar!", Toast.LENGTH_LONG).show();
-//        }
     }
 
     public void signup(){
         Intent intent = new Intent(this, SignUpActivity.class);
         startActivity(intent);
     }
+
+
+
 }
