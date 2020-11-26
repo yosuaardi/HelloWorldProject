@@ -28,6 +28,7 @@ import com.google.android.material.tabs.TabLayout;
 public class HomeActivity extends AppCompatActivity {
     private TabItem tab1;
     private TabItem tab2;
+    private TabItem tab3;
     private TabLayout tabLayout;
     private Button btnStart = null;
     private Button btnStop = null;
@@ -40,6 +41,7 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         tab1 = findViewById(R.id.tabItem1);
         tab2 = findViewById(R.id.tabItem2);
+        tab3 = findViewById(R.id.tabItem3);
         tabLayout = findViewById(R.id.tabs);
         String getExtra = getIntent().getStringExtra("COBA_INTENT_EXTRA");
         BroadcastReceiverClass bcReceiver = new BroadcastReceiverClass();
@@ -61,6 +63,11 @@ public class HomeActivity extends AppCompatActivity {
                     fragmentTransaction.replace(R.id.fragmentPlaceholder, new FragmentBottom());
                     fragmentTransaction.commit();
                     Log.d("success", "Tab 2");
+                }else if(tab.getPosition() == 2){
+                    FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                    fragmentTransaction.replace(R.id.fragmentPlaceholder, new FragmentCamera());
+                    fragmentTransaction.commit();
+                    Log.d("success", "Tab 3");
                 }
             }
 
